@@ -6,5 +6,7 @@ package jp._5000164.hugo_url_converter.interfaces
 object Application extends App {
   val targetDirectory = args(0)
   val files = Load.getTargetFilePathList(targetDirectory)
-  println(files)
+  for (filePath <- files) {
+    val content = Load.getContent(filePath)
+  }
 }
