@@ -6,7 +6,11 @@ object Converter {
       def buildLineAndDetectFilePath(basePath: String, filePath: String, line: String, content: String): (String, String) = {
         def makeFileName(basePath: String, filePath: String, date: String): String = {
           val (year, month, day) = date.split('T').head.split('-') match {
-            case Array(y, m, d) => (y, m.filterNot(_ == '0'), d.filterNot(_ == '0'))
+            case Array(y, m, d) => (
+              y,
+              if (m.head == '0') m.tail else m,
+              if (d.head == '0') d.tail else d
+            )
           }
           val fileName = filePath.split('/').last.replaceAll("_", "-")
           s"$basePath/$year/$month/$day/$fileName"
