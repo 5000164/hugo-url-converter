@@ -31,6 +31,16 @@ object Converter {
       }
     }
 
-    calculate(basePath, filePath, "", content)
+    val (toFilePath, toContent) = calculate(basePath, filePath, "", content)
+
+    // 最初に空文字を渡しているので先頭に必ず改行が入るので改行を削除する
+    val removedContent = toContent.tail
+
+    // ファイルの最後の改行の数を揃える
+    val formattedContent =
+      if (removedContent.takeRight(2) == "\n\n") removedContent
+      else removedContent + "\n"
+
+    (toFilePath, formattedContent)
   }
 }
