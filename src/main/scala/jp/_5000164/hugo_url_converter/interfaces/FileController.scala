@@ -4,7 +4,7 @@ import java.io.File
 
 import scala.io.Source
 
-object Load {
+object FileController {
   def getTargetFilePathList(targetPath: String): List[String] = {
     new File(targetPath).listFiles.toList.flatMap {
       case d if d.isDirectory => getTargetFilePathList(d.getPath)
