@@ -11,5 +11,7 @@ object Application extends App {
   for (filePath <- files) {
     val content = FileController.getContent(filePath)
     val (toFilePath, toContent) = Converter.toEachDay(basePath, filePath, content)
+    FileController.remove(filePath)
+    FileController.save(toFilePath, toContent)
   }
 }
