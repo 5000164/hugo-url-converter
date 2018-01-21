@@ -7,11 +7,10 @@ import jp._5000164.hugo_url_converter.domain.Converter
   */
 object Application extends App {
   val basePath = args(0)
-  val files = FileController.getTargetFilePathList(basePath)
-  for (filePath <- files) {
-    val content = FileController.getContent(filePath)
-    val (toFilePath, toContent) = Converter.toEachDay(basePath, filePath, content)
-    FileController.remove(filePath)
+  for (fromFilePath <- FileController.getTargetFilePathList(basePath)) {
+    val fromContent = FileController.getContent(fromFilePath)
+    val (toFilePath, toContent) = Converter.toEachDay(basePath, fromFilePath, fromContent)
+    FileController.remove(fromFilePath)
     FileController.save(toFilePath, toContent)
   }
 }
