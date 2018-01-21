@@ -7,12 +7,12 @@ import scala.io.Source
 
 object FileController {
   def getTargetFilePathList(path: String): List[String] = {
-    def getFilePathRecursive(files: Array[File]): Array[String] = files.flatMap {
-      case d if d.isDirectory => getTargetFilePathList(d.getPath)
-      case x => Array(x.getPath)
-    }
-
     getFilePathRecursive(new File(path).listFiles).filter(_.takeRight(3) == ".md").toList
+  }
+
+  private def getFilePathRecursive(files: Array[File]): Array[String] = files.flatMap {
+    case d if d.isDirectory => getTargetFilePathList(d.getPath)
+    case x => Array(x.getPath)
   }
 
   def getContent(filePath: String): List[String] = {
