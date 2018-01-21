@@ -6,11 +6,13 @@ import java.nio.file.{Files, Paths}
 import scala.io.Source
 
 object FileController {
-  def getTargetFilePathList(targetPath: String): List[String] = {
-    new File(targetPath).listFiles.toList.flatMap {
+  def getTargetFilePathList(path: String): List[String] = {
+    def getFilePathRecursive(files: Array[File]): Array[String] = files.flatMap {
       case d if d.isDirectory => getTargetFilePathList(d.getPath)
-      case x => List(x.getPath)
-    }.filter(_.takeRight(3) == ".md")
+      case x => Array(x.getPath)
+    }
+
+    getFilePathRecursive(new File(path).listFiles).filter(_.takeRight(3) == ".md").toList
   }
 
   def getContent(filePath: String): List[String] = {
